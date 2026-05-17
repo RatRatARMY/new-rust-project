@@ -1,0 +1,3 @@
+[submodule "helloworld/3rdparty/inquire"]
+	path = helloworld/3rdparty/inquire
+	url = https://github.com/mikaelmello/inquire
