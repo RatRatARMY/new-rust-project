@@ -1,22 +1,37 @@
-use equationsolver::solve_linear_equation;
-
-#[derive(Debug, Clone)]
-pub enum Message {
-    SolveEquation,
-    AChanged(String),
-    BChanged(String)
+use equationsolver::{solve_linear_equation, solve_quadratic_equation};
+#[derive(Debug)]
+pub struct AppState {
+    current_page: crate::page::Pages,
+    linear_equation_state: LinearEquationState,
+    quadratic_equation_state: QuadraticEquationState
+}
+impl Default for AppState {
+    fn default() -> Self {
+        Self {
+            current_page: crate::page::Pages::Home,
+            linear_equation_state: LinearEquationState::default(),
+            quadratic_equation_state: QuadraticEquationState::default()
+        }
+    }
 }
 #[derive(Debug, Default)]
-pub struct AppState {
-    a: String, // thực tế là f64.
-    b: String, // thực tế là f64.
+pub struct LinearEquationState {
+    a: String,
+    b: String,
     res: String
 }
-pub fn update(state: &mut AppState, message: Message) {
+#[derive(Debug, Default)]
+pub struct QuadraticEquationState {
+    a: String,
+    b: String,
+    c: String,
+    res: String
+}
+pub fn linear_equation_update(state: &mut LinearEquationState, message: crate::events::Events) {
     match message {
-        Message::AChanged(value) => state.a = value,
-        Message::BChanged(value) => state.b = value,
-        Message::SolveEquation => {
+        crate::events::Events::AChanged(value) => state.a = value,
+        crate::events::Events::BChanged(value) => state.b = value,
+        crate::events::Events::SolveEquation => {
             let a = state.a.parse::<f64>().unwrap_or(0f64);
             let b = state.b.parse::<f64>().unwrap_or(0f64);
             match solve_linear_equation(a, b) {
@@ -24,14 +39,76 @@ pub fn update(state: &mut AppState, message: Message) {
                 Some(x) => state.res = format!("Phương trình có nghiệm x = {:.7}", x)
             }
         }
+        _ => {}
     }
 }
-pub fn view(state: &AppState) -> iced::Element<Message> {
+pub fn linear_equation_view(state: &LinearEquationState) -> iced::Element<'_, crate::events::Events> {
     iced::widget::column![
         iced::widget::text("Xin chào thế giới!"),
-        iced::widget::text_input("Nhập a: ", &state.a).on_input(Message::AChanged),
-        iced::widget::text_input("Nhập b: ", &state.b).on_input(Message::BChanged),
-        iced::widget::button("Giải phương trình ax + b = 0 (a != 0)").on_press(Message::SolveEquation),
+        iced::widget::button("Quay lại").on_press(crate::events::Events::ChangePage(crate::page::Pages::Home)),
+        iced::widget::text_input("Nhập a: ", &state.a).on_input(crate::events::Events::AChanged),
+        iced::widget::text_input("Nhập b: ", &state.b).on_input(crate::events::Events::BChanged),
+        iced::widget::button("Giải phương trình ax + b = 0 (a != 0)").on_press(crate::events::Events::SolveEquation),
         iced::widget::text(&state.res)
     ].into()
+}
+pub fn quadratic_equation_update(state: &mut QuadraticEquationState, message: crate::events::Events) {
+    match message {
+        crate::events::Events::AChanged(value) => state.a = value,
+        crate::events::Events::BChanged(value) => state.b = value,
+        crate::events::Events::CChanged(value) => state.c = value,
+        crate::events::Events::SolveEquation => {
+            let a = state.a.parse::<f64>().unwrap_or(0f64);
+            let b = state.b.parse::<f64>().unwrap_or(0f64);
+            let c = state.c.parse::<f64>().unwrap_or(0f64);
+            match solve_quadratic_equation(a, b, c) {
+                None => state.res = String::from("Phương trình vô nghiệm."),
+                Some((x1, x2)) => {
+                    if x1 == x2 {
+                        state.res = format!("Phương trình có nghiệm kép:\nx₁ = x₂ = {:.7}", x2)
+                    }
+                    else {
+                        state.res = format!("Phương trình có hai nghiệm phân biệt:\nx₁ = {:.7}\nx₂ = {:.7}", x1, x2)
+                    }
+                }
+            }
+        },
+        _ => {}
+    }
+}
+pub fn quadratic_equation_view(state: &QuadraticEquationState) -> iced::Element<'_, crate::events::Events> {
+    iced::widget::column![
+        iced::widget::text("Giải phương trình bậc hai ax² + bx + c = 0 (a != 0)"),
+        iced::widget::button("Quay lại").on_press(crate::events::Events::ChangePage(crate::page::Pages::Home)),
+        iced::widget::text_input("Nhập a: ", &state.a).on_input(crate::events::Events::AChanged),
+        iced::widget::text_input("Nhập b: ", &state.b).on_input(crate::events::Events::BChanged),
+        iced::widget::text_input("Nhập c: ", &state.c).on_input(crate::events::Events::CChanged),
+        iced::widget::button("Giải phương trình ax² + bx + c = 0 (a != 0)").on_press(crate::events::Events::SolveEquation),
+        iced::widget::text(&state.res)
+    ].into()
+}
+pub fn update(state: &mut AppState, message: crate::events::Events) {
+    match message {
+        crate::events::Events::ChangePage(page) => state.current_page = page,
+        _ => {
+            match state.current_page {
+                crate::page::Pages::LinearEquation => linear_equation_update(&mut state.linear_equation_state, message),
+                crate::page::Pages::QuadraticEquation => quadratic_equation_update(&mut state.quadratic_equation_state, message),
+                _ => {}
+            }
+        }
+    }
+}
+pub fn view(state: &AppState) -> iced::Element<'_, crate::events::Events> {
+    match state.current_page {
+        crate::page::Pages::Home => {
+            iced::widget::column![
+                iced::widget::text("Giải các loại phương trình."),
+                iced::widget::button("Giải phương trình bậc nhất ax + b = 0. (a != 0)").on_press(crate::events::Events::ChangePage(crate::page::Pages::LinearEquation)),
+                iced::widget::button("Giải phương trình bậc hai ax² + bx + c = 0 (a != 0) (coming soon)").on_press(crate::events::Events::ChangePage(crate::page::Pages::QuadraticEquation))
+            ].into()
+        }
+        crate::page::Pages::LinearEquation => linear_equation_view(&state.linear_equation_state),
+        crate::page::Pages::QuadraticEquation => quadratic_equation_view(&state.quadratic_equation_state)
+    }
 }
