@@ -10,10 +10,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let b = inquire::Text::new("Nhập số b: ").prompt()?.parse::<f64>()?;
         match solve_linear_equation(a, b) {
             None => println!("Phương trình vô nghiệm. (hoặc vô số nghiệm, tôi không biết :D)"),
-            Some(x) => println!("Phương trình có nghiệm x = {}", x)
+            Some(x) => println!("Phương trình có nghiệm x = {}", x),
         }
-    }
-    else {
+    } else {
         println!("Giải phương trình bậc hai ax² + bx + c = 0 (a != 0) (còn nhiều bug chưa sửa, mong thông cảm, có gì report các bug đó lên GitHub giùm tôi)");
         let a = inquire::Text::new("Nhập số a: ").prompt()?.parse::<f64>()?;
         let b = inquire::Text::new("Nhập số b: ").prompt()?.parse::<f64>()?;
@@ -23,9 +22,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             Some((x1, x2)) => {
                 if x1 == x2 {
                     println!("Phương trình có nghiệm kép x₁ = x₂ = {}", x2)
-                }
-                else {
-                    println!("Phương trình có hai nghiệm phân biệt:\nx₁ = {}\nx₂ = {}", x1, x2)
+                } else {
+                    println!(
+                        "Phương trình có hai nghiệm phân biệt:\nx₁ = {}\nx₂ = {}",
+                        x1, x2
+                    )
                 }
             }
         }

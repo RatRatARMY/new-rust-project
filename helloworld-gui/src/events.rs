@@ -4,5 +4,5 @@ pub enum Events {
     AChanged(String),
     BChanged(String),
     CChanged(String),
-    ChangePage(crate::page::Pages)
+    ChangePage(crate::page::Pages),
 }

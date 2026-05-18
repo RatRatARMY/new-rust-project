@@ -1,5 +1,5 @@
-pub mod logic;
 pub mod events;
+pub mod logic;
 pub mod page;
 
 fn main() -> iced::Result {

@@ -2,6 +2,7 @@
 name = "helloworld-gui"
 version = "0.1.0"
 edition = "2024"
+description = "GUI version of the helloworld executable"
 
 [dependencies]
 equationsolver = {path = "../equationsolver"}

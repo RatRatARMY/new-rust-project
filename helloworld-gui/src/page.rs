@@ -3,5 +3,5 @@ pub enum Pages {
     #[default]
     Home,
     LinearEquation,
-    QuadraticEquation
+    QuadraticEquation,
 }
