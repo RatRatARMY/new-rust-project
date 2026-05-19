@@ -21,8 +21,8 @@ pub fn solve_quadratic_equation(a: f64, b: f64, c: f64) -> Option<(f64, f64)> {
         Some((-b / (2f64 * a), -b / (2f64 * a)))
     } else {
         Some((
-            (-b + delta.sqrt()) / (2f64 * a),
             (-b - delta.sqrt()) / (2f64 * a),
+            (-b + delta.sqrt()) / (2f64 * a),
         ))
     }
 }

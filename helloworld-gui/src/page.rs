@@ -4,4 +4,5 @@ pub enum Pages {
     Home,
     LinearEquation,
     QuadraticEquation,
+    CubicEquation,
 }
