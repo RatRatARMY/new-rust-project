@@ -1,3 +1,6 @@
 [submodule "helloworld/3rdparty/inquire"]
 	path = helloworld/3rdparty/inquire
 	url = https://github.com/mikaelmello/inquire
+[submodule "catch-the-apple/3rdparty/sdl3-rs"]
+	path = catch-the-apple/3rdparty/sdl3-rs
+	url = https://github.com/vhspace/sdl3-rs

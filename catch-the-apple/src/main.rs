@@ -14,7 +14,6 @@ fn main() {
     let mut cat_x = 0;
     let cat_y = (height - cat_img.height()) as i32;
     let mut cat_speed = 0;
-    let cat_rect = sdl3::rect::Rect::new(cat_x, cat_y, cat_img.width(), cat_img.height());
     canvas.present();
     let mut events = sdl3_context.event_pump().unwrap();
     'running: loop {
@@ -41,6 +40,7 @@ fn main() {
                 _ => {}
             }
         }
+        let cat_rect = sdl3::rect::Rect::new(cat_x, cat_y, cat_img.width(), cat_img.height());
         cat_x += cat_speed;
         if cat_x > width as i32 - cat_img.width() as i32 {
             cat_x = width as i32 - cat_img.width() as i32;
