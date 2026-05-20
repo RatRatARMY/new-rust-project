@@ -11,7 +11,7 @@ fn main() {
     let cat_sprite = sdl3::surface::Surface::from_file("assets/spr_cat.png").unwrap();
     let bg_img = texture_creator.create_texture_from_surface(&main_surface).unwrap();
     let cat_img = texture_creator.create_texture_from_surface(&cat_sprite).unwrap();
-    let mut cat_x = (width - cat_img.width()) as i32;
+    let mut cat_x = 0;
     let cat_y = (height - cat_img.height()) as i32;
     let mut cat_speed = 0;
     let cat_rect = sdl3::rect::Rect::new(cat_x, cat_y, cat_img.width(), cat_img.height());
