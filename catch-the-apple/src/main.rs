@@ -42,6 +42,10 @@ fn main() {
             }
         }
         cat_x += cat_speed;
+        if cat_x > width as i32 - cat_img.width() as i32 {
+            cat_x = width as i32 - cat_img.width() as i32;
+        }
+        else if cat_x < 0 {cat_x = 0;}
         canvas.copy(&bg_img, None, None).unwrap();
         canvas.copy(&cat_img, None, cat_rect).unwrap();
         canvas.present();
