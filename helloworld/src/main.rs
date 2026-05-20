@@ -1,5 +1,4 @@
-use equationsolver::solve_cubic_equation::solve_cubic_equation;
-use equationsolver::{solve_linear_equation, solve_quadratic_equation};
+use equationsolver::{solve_cubic_equation, solve_linear_equation, solve_quadratic_equation};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let choices = vec![1, 2, 3];

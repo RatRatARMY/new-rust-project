@@ -2,7 +2,7 @@
 name = "helloworld"
 version = "0.1.0"
 edition = "2024"
-description = "Original CLI version."
+description.workspace = true
 
 [dependencies]
 equationsolver = {path = "../equationsolver"}

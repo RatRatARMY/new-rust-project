@@ -1,3 +1,5 @@
 [workspace]
 resolver = "3"
-members = ["equationsolver","helloworld", "helloworld-gui"]
+members = ["catch-the-apple","equationsolver","helloworld", "helloworld-gui"]
+[workspace.package]
+description = "Một mớ hỗn độn nhiều hơn là một project được dùng hợp lý :D"

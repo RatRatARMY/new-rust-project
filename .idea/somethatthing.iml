@@ -6,6 +6,10 @@
       <sourceFolder url="file://$MODULE_DIR$/helloworld-gui/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/helloworld/3rdparty/inquire/inquire/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/helloworld/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/catch-the-apple/3rdparty/sdl3-rs/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/catch-the-apple/3rdparty/sdl3-rs/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/catch-the-apple/3rdparty/sdl3-rs/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/catch-the-apple/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

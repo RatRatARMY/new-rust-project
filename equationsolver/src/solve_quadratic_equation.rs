@@ -1,5 +1,6 @@
 use crate::solve_linear_equation;
-
+/// Giải phương trình bậc hai `ax² + bx + c = 0 (a != 0)`<br>
+/// Chúng ta chỉ quan tâm đến nghiệm thực, bỏ qua nghiệm phức (vì nghiệm phức tương đối khó xử lí)
 pub fn solve_quadratic_equation(a: f64, b: f64, c: f64) -> Option<(f64, f64)> {
     if a == 0f64 {
         return Some((solve_linear_equation(b, c)?, solve_linear_equation(b, c)?));
