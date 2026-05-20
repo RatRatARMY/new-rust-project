@@ -4,3 +4,6 @@
 [submodule "catch-the-apple/3rdparty/sdl3-rs"]
 	path = catch-the-apple/3rdparty/sdl3-rs
 	url = https://github.com/vhspace/sdl3-rs
+[submodule "catch-the-apple/3rdparty/rand"]
+	path = catch-the-apple/3rdparty/rand
+	url = https://github.com/rust-random/rand

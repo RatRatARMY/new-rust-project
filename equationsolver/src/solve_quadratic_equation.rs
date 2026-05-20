@@ -10,7 +10,7 @@ pub fn solve_quadratic_equation(a: f64, b: f64, c: f64) -> Option<(f64, f64)> {
             Some(((-c / a).sqrt(), (-c / a).sqrt()))
         } else {
             None
-        }
+        };
     }
     if c == 0f64 {
         return Some((0f64, solve_linear_equation(a, b)?));

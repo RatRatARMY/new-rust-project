@@ -6,3 +6,4 @@ description.workspace = true
 
 [dependencies]
 sdl3 = {path = "3rdparty/sdl3-rs", features = ["build-from-source", "ash", "image", "ttf"]}
+rand = {path = "3rdparty/rand"}
