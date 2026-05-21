@@ -1,4 +1,4 @@
-use rand::{Rng, RngExt};
+use rand::RngExt;
 fn main() {
     let mut random = rand::rng();
     let (width, height): (u32, u32) = (960, 720);
@@ -41,6 +41,7 @@ fn main() {
     canvas.present();
     let mut events = sdl3_context.event_pump().unwrap();
     let mut score = 0;
+    let mut missed = 0;
     let mut time = 120 * 60;
     'running: loop {
         for event in events.poll_iter() {
@@ -111,6 +112,7 @@ fn main() {
             if apple_y > height as i32 {
                 apple_y = 0;
                 apple_x = random.random_range(0..=width as i32 - apple_img.width() as i32);
+                missed += 1;
             }
             if can_collide && distance < 60f64 {
                 score += 1;
@@ -137,8 +139,15 @@ fn main() {
                 .render(&format!("Time: {:.0}", time / 60))
                 .solid(sdl3::pixels::Color::WHITE)
                 .unwrap();
+            let missed_render = font
+                .render(&format!("Missed: {}", missed))
+                .solid(sdl3::pixels::Color::WHITE)
+                .unwrap();
             let score_texture = texture_creator
                 .create_texture_from_surface(&score_render)
+                .unwrap();
+            let missed_texture = texture_creator
+                .create_texture_from_surface(&missed_render)
                 .unwrap();
             let time_texture = texture_creator
                 .create_texture_from_surface(&time_render)
@@ -152,11 +161,23 @@ fn main() {
                 .unwrap();
             canvas
                 .copy(
-                    &time_texture,
+                    &missed_texture,
                     None,
                     sdl3::rect::Rect::new(
                         0,
                         score_texture.height() as i32,
+                        missed_texture.width(),
+                        missed_texture.height(),
+                    ),
+                )
+                .unwrap();
+            canvas
+                .copy(
+                    &time_texture,
+                    None,
+                    sdl3::rect::Rect::new(
+                        0,
+                        score_texture.height() as i32 + missed_texture.height() as i32,
                         time_texture.width(),
                         time_texture.height(),
                     ),
